@@ -34,7 +34,17 @@
       pointer-events: none;
       appearance: none;
       -webkit-appearance: none;
-      opacity: 0;
+    }
+    .bg-poster {
+      position: fixed;
+      inset: 0;
+      background-image: url("poster.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 1;
       transition: opacity 0.35s ease;
     }
     video::-webkit-media-controls,
@@ -50,7 +60,7 @@
     .bg-overlay {
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
       background:
         radial-gradient(ellipse 82% 64% at 50% 40%,
@@ -80,13 +90,13 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 2;
+      z-index: 3;
       opacity: 0.12;
       mix-blend-mode: multiply;
     }
     .stage {
       position: relative;
-      z-index: 3;
+      z-index: 4;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -128,7 +138,52 @@
 </head>
 <body>
   <h1 class="vh">Welcome to braders.uk — Coming soon!</h1>
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="poster.jpg" src="bg.mp4" aria-hidden="true"></video>
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="bg.mp4" aria-hidden="true"></video>
+  <script>
+  (function () {
+    var video = document.querySelector(".bg-video");
+    if (!video) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    if ("webkitPlaysInline" in video) video.webkitPlaysInline = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.controls = false;
+
+    function kick() {
+      var p = video.play();
+      if (p && typeof p.catch === "function") p.catch(function () {});
+    }
+
+    kick();
+    video.addEventListener("loadeddata", kick);
+    video.addEventListener("canplay", kick);
+    video.addEventListener("canplaythrough", kick);
+    window.addEventListener("load", kick);
+    window.addEventListener("pageshow", kick);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") kick();
+    });
+    video.addEventListener("playing", function () {
+      var poster = document.querySelector(".bg-poster");
+      if (poster) poster.style.opacity = "0";
+      kick();
+    });
+    document.addEventListener("touchstart", kick, { capture: true, once: true });
+    document.addEventListener("pointerdown", kick, { capture: true, once: true });
+    document.addEventListener("click", kick, { capture: true, once: true });
+    video.addEventListener("pause", function () {
+      if (document.visibilityState === "visible") kick();
+    });
+    video.addEventListener("ended", function () {
+      kick();
+    });
+  })();
+  </script>
+  <div class="bg-poster" aria-hidden="true"></div>
   <div class="bg-overlay" aria-hidden="true"></div>
   <svg class="paper-grain" aria-hidden="true" focusable="false">
     <defs>
@@ -241,60 +296,6 @@
     </svg>
   </div>
   <noscript><style>path.letter{opacity:1}</style></noscript>
-  <script>
-  (function () {
-    var video = document.querySelector(".bg-video");
-    if (!video) return;
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    if ("webkitPlaysInline" in video) video.webkitPlaysInline = true;
-    video.loop = true;
-
-    function kick() {
-      var p = video.play();
-      if (p && typeof p.catch === "function") p.catch(function () {});
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", kick);
-    } else {
-      kick();
-    }
-    window.addEventListener("load", kick);
-    video.addEventListener("loadeddata", kick);
-    video.addEventListener("canplay", kick);
-    video.addEventListener("canplaythrough", kick);
-    video.addEventListener("playing", function () {
-      video.style.opacity = "1";
-      kick();
-    });
-    window.addEventListener("pageshow", kick);
-    document.addEventListener("visibilitychange", function () {
-      if (document.visibilityState === "visible") kick();
-    });
-
-    var gestured = false;
-    function onFirstGesture() {
-      if (gestured) return;
-      gestured = true;
-      kick();
-    }
-    document.addEventListener("touchstart", onFirstGesture, { capture: true, once: true });
-    document.addEventListener("pointerdown", onFirstGesture, { capture: true, once: true });
-    document.addEventListener("click", onFirstGesture, { capture: true, once: true });
-
-    video.addEventListener("pause", function () {
-      if (document.visibilityState === "visible") kick();
-    });
-
-    video.addEventListener("ended", function () {
-      kick();
-    });
-  })();
-  </script>
   <script>
   (function () {
     var paths = Array.prototype.slice.call(document.querySelectorAll("path.letter"));
