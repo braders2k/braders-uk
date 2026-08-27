@@ -18,7 +18,7 @@
       min-height: 100vh;
       min-height: 100dvh;
       background-color: #1c1610;
-      background-image: url("poster-v7.jpg");
+      background-image: url("poster-v8.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -38,7 +38,7 @@
     .bg-poster {
       position: fixed;
       inset: 0;
-      background-image: url("poster-v7.jpg");
+      background-image: url("poster-v8.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -78,11 +78,11 @@
       width: min(94vw, 960px);
       height: auto;
       overflow: visible;
-      filter: drop-shadow(0 0 28px rgba(12, 10, 8, 0.28));
+      filter: drop-shadow(0 0 22px rgba(255, 252, 245, 0.42));
     }
     path.letter {
       fill: none;
-      stroke: #fff8ee;
+      stroke: #141414;
       stroke-width: 3.7;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -106,7 +106,7 @@
 </head>
 <body>
   <h1 class="vh">Welcome to braders.uk — Coming soon!</h1>
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="bg-v7.mp4" aria-hidden="true"></video>
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="bg-v8.mp4" aria-hidden="true"></video>
   <script>
   (function () {
     var video = document.querySelector(".bg-video");
@@ -157,11 +157,11 @@
       <title id="pgTitle">Welcome to braders.uk Coming soon!</title>
       <defs>
         <linearGradient id="gBarrel" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#2a3854"/>
-          <stop offset="0.18" stop-color="#151c2c"/>
-          <stop offset="0.48" stop-color="#070a10"/>
-          <stop offset="0.72" stop-color="#12192a"/>
-          <stop offset="1" stop-color="#05070c"/>
+          <stop offset="0" stop-color="#2a2a2a"/>
+          <stop offset="0.18" stop-color="#161616"/>
+          <stop offset="0.48" stop-color="#070707"/>
+          <stop offset="0.72" stop-color="#141414"/>
+          <stop offset="1" stop-color="#050505"/>
         </linearGradient>
         <linearGradient id="gClip" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#f4f6f8"/>
@@ -181,7 +181,7 @@
           <stop offset="1" stop-color="#1a1c20"/>
         </linearGradient>
         <filter id="letterInk" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0.7" dy="1.4" stdDeviation="1.05" flood-color="#0b0907" flood-opacity="0.82"/>
+          <feDropShadow dx="0" dy="0.4" stdDeviation="0.9" flood-color="#f4f1ea" flood-opacity="0.55"/>
         </filter>
       </defs>
     <path class="letter" data-i="0" data-ch="W" data-ln="1" d="M 61.40,40.00 C 59.00,73.00 57.40,108.00 59.60,123.20 C 66.80,104.00 74.20,78.00 78.50,64.00 C 77.70,86.00 76.40,112.00 79.00,123.40 C 86.40,102.00 94.20,62.00 100.60,40.50"/>
@@ -232,9 +232,9 @@
           <path d="M-56.7,-7.55 L-42.4,-7.55" fill="none" stroke="#fff" stroke-width="0.35" opacity="0.28"/>
           <rect x="-58.2" y="-3.7" width="3.4" height="2.35" rx="0.35" fill="#1c2230"/>
           <rect x="-67.0" y="-2.85" width="5.6" height="5.7" rx="0.85" fill="#0a0e16"/>
-          <rect x="-67.0" y="-2.85" width="5.6" height="1.45" rx="0.7" fill="#3a4a68" opacity="0.32"/>
+          <rect x="-67.0" y="-2.85" width="5.6" height="1.45" rx="0.7" fill="#3a3a3a" opacity="0.32"/>
           <rect x="-61.6" y="-3.3" width="47.4" height="6.6" rx="1.05" fill="url(#gBarrel)"/>
-          <rect x="-60.9" y="-2.95" width="45.8" height="1.25" rx="0.6" fill="#9ab0d4" opacity="0.16"/>
+          <rect x="-60.9" y="-2.95" width="45.8" height="1.25" rx="0.6" fill="#d0d0d0" opacity="0.16"/>
           <rect x="-61.2" y="0.55" width="46.6" height="2.5" rx="0.55" fill="#000" opacity="0.32"/>
           <rect x="-15.6" y="-3.4" width="3.15" height="6.8" rx="0.22" fill="url(#gClip)"/>
           <path d="M-14.85,-3.4 V3.4 M-13.7,-3.4 V3.4" fill="none" stroke="#5a6270" stroke-width="0.2" opacity="0.5"/>
