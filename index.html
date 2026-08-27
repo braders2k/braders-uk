@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#e8dcc8">
+  <meta name="theme-color" content="#e6d4b6">
   <title>braders.uk</title>
   <meta name="description" content="braders.uk">
   <style>
@@ -11,18 +11,63 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       height: 100%;
-      background: #e8dcc8;
+      background: #e6d4b6;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
     body {
       min-height: 100vh;
       min-height: 100dvh;
-      background-color: #e8dcc8;
+      background-color: #e6d4b6;
       background-image:
-        radial-gradient(120% 90% at 50% 42%, #f2e7d4 0%, #e8dcc8 58%, #dfd0b6 100%);
+        radial-gradient(ellipse 23vmin 13vmin at 8% 71%,
+          rgba(136, 94, 54, 0.10) 0%,
+          rgba(148, 108, 66, 0.04) 44%,
+          transparent 72%),
+        radial-gradient(ellipse 15vmin 10vmin at 80% 7%,
+          rgba(156, 116, 66, 0.08) 0%,
+          rgba(140, 100, 56, 0.03) 52%,
+          transparent 74%),
+        radial-gradient(ellipse 8vmin 5vmin at 34% 93%,
+          rgba(146, 106, 58, 0.07) 0%,
+          transparent 70%),
+        radial-gradient(ellipse 80% 55% at 0% 0%, rgba(148, 108, 64, 0.09), transparent 52%),
+        radial-gradient(ellipse 70% 50% at 100% 0%, rgba(140, 100, 58, 0.07), transparent 50%),
+        radial-gradient(ellipse 75% 55% at 100% 100%, rgba(130, 90, 50, 0.10), transparent 54%),
+        radial-gradient(ellipse 65% 45% at 0% 100%, rgba(146, 106, 60, 0.08), transparent 50%),
+        radial-gradient(120% 90% at 50% 42%, #f1e3cc 0%, #e8d6b8 58%, #dcc4a0 100%);
       overflow: hidden;
     }
+    .paper-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.2;
+      mix-blend-mode: multiply;
+    }
+    .mug-stain {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: multiply;
+    }
+    .mug-stain-a {
+      width: min(42vw, 260px);
+      height: min(42vw, 260px);
+      top: 1.5vh;
+      left: -6vw;
+    }
+    .mug-stain-b {
+      width: min(32vw, 200px);
+      height: min(32vw, 200px);
+      right: 1vw;
+      bottom: 6vh;
+    }
     .stage {
+      position: relative;
+      z-index: 1;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -32,7 +77,7 @@
       padding-left: max(4.5vw, env(safe-area-inset-left));
       padding-right: max(4.5vw, env(safe-area-inset-right));
     }
-    svg {
+    .stage svg {
       display: block;
       width: min(94vw, 960px);
       height: auto;
@@ -62,10 +107,53 @@
   </style>
 </head>
 <body>
-  <h1 class="vh">welcome to braders.uk — coming soon</h1>
+  <h1 class="vh">welcome to braders.uk — coming soon!</h1>
+  <svg class="paper-grain" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="paperGrain" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="3" seed="4" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+      <pattern id="pg" width="140" height="140" patternUnits="userSpaceOnUse">
+        <rect width="140" height="140" filter="url(#paperGrain)"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#pg)"/>
+  </svg>
+  <svg class="mug-stain mug-stain-a" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="stainSoftA" x="-25%" y="-25%" width="150%" height="150%">
+        <feGaussianBlur stdDeviation="1.15"/>
+      </filter>
+      <filter id="blotSoftA" x="-35%" y="-35%" width="170%" height="170%">
+        <feGaussianBlur stdDeviation="1.8"/>
+      </filter>
+    </defs>
+    <g filter="url(#stainSoftA)" fill="none" stroke-linecap="round">
+      <path d="M16,47 C17,27 33,13 51,14 C71,15 86,32 85,52 C84,70 69,86 50,85 C36,84 24,73 19,61"
+            stroke="#6a4628" stroke-width="3.5" opacity="0.24"/>
+      <path d="M22,50 C24,34 38,22 54,23 C70,24 82,38 81,54 C80,68 67,80 52,79"
+            stroke="#875e3a" stroke-width="1.8" opacity="0.13"/>
+    </g>
+    <g filter="url(#blotSoftA)" fill="#7a522e">
+      <ellipse cx="63" cy="79" rx="7.5" ry="4.4" opacity="0.12"/>
+      <path d="M57,75 C61,85 72,88 74,79 C69,77 62,75 57,75Z" opacity="0.1"/>
+    </g>
+  </svg>
+  <svg class="mug-stain mug-stain-b" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="stainSoftB" x="-25%" y="-25%" width="150%" height="150%">
+        <feGaussianBlur stdDeviation="1.2"/>
+      </filter>
+    </defs>
+    <g filter="url(#stainSoftB)" fill="none" stroke-linecap="round">
+      <path d="M78,32 C88,42 90,62 78,76 C66,90 42,90 30,76 C22,66 22,52 30,42"
+            stroke="#704a2a" stroke-width="3.1" opacity="0.18"/>
+    </g>
+  </svg>
   <div class="stage">
     <svg viewBox="0 0 706 300" role="img" aria-labelledby="pgTitle" shape-rendering="geometricPrecision">
-      <title id="pgTitle">welcome to braders.uk coming soon</title>
+      <title id="pgTitle">welcome to braders.uk coming soon!</title>
       <defs>
         <linearGradient id="gWood" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stop-color="#e8c98a"/>
@@ -135,6 +223,9 @@
     <path class="letter" data-i="35" data-ch="o" data-ln="2" d="M 447.40,175.50 C 436.24,176.50 428.06,192.00 428.14,209.00 C 428.34,224.00 438.44,231.50 450.62,221.00 C 459.64,211.50 464.02,186.00 454.94,176.50 C 452.56,174.50 448.98,175.00 447.08,177.50"/>
     <path class="letter" data-i="36" data-ch="o" data-ln="2" d="M 478.40,175.50 C 467.24,176.50 459.06,192.00 459.14,209.00 C 459.34,224.00 469.44,231.50 481.62,221.00 C 490.64,211.50 495.02,186.00 485.94,176.50 C 483.56,174.50 479.98,175.00 478.08,177.50"/>
     <path class="letter" data-i="37" data-ch="n" data-ln="2" d="M 497.70,178.00 C 493.74,204.00 491.78,220.00 491.78,230.00 C 497.14,204.00 508.74,176.50 520.00,178.00 C 526.76,179.50 523.22,206.00 519.60,230.50"/>
+    <path class="letter" data-i="38" data-ch="!" data-ln="2" d="M 542.40,158.00 C 538.20,176.00 535.60,194.00 534.80,208.50 C 534.95,213.00 540.50,211.20 541.80,205.50"/>
+    <path class="letter" data-i="39" data-ch="!" data-ln="2" d="M 539.54,226.00 C 540.21,221.80 545.01,221.80 544.34,226.00 C 543.67,230.20 538.87,230.20 539.54,226.00"/>
+    <path class="letter" data-i="40" data-ch="~" data-ln="3" data-slow="1" d="M 206,275 C 238,261 272,290 312,271 C 344,256 368,286 404,272 C 436,260 462,288 500,269 C 526,257 548,278 556,264 C 561,255 551,251 543,258 C 535,265 537,277 551,280"/>
       <g id="pencil" opacity="0">
         <g transform="scale(1.18)">
           <ellipse cx="-30" cy="5.4" rx="24" ry="2.1" fill="#3a2a18" opacity="0.16"/>
@@ -175,7 +266,7 @@
 
     var HOLD = 47;
     var penAngle = HOLD;
-    var MULTI = { t: 1, b: 1, r: 1, a: 1, d: 1, k: 1, i: 1 };
+    var MULTI = { t: 1, b: 1, r: 1, a: 1, d: 1, k: 1, i: 1, "!": 1 };
 
     function isIntra(fromP, toP) {
       if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) return false;
@@ -208,27 +299,30 @@
     function finish() {
       var last = paths[paths.length - 1];
       place(last, lengths[lengths.length - 1], lengths[lengths.length - 1]);
-      pencil.style.transition = "opacity 1.1s ease";
-      pencil.style.opacity = "0.5";
+      pencil.style.transition = "opacity 0.8s ease";
+      pencil.style.opacity = "0";
     }
 
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       paths.forEach(function (p) { p.style.strokeDashoffset = "0"; });
-      pencil.style.opacity = "0.5";
+      pencil.style.opacity = "0";
       finish();
       return;
     }
 
     var sum = 0;
-    for (var n = 0; n < lengths.length; n++) sum += lengths[n];
-    var SPEED = sum / 8.8;
+    for (var n = 0; n < lengths.length; n++) {
+      if (!paths[n].getAttribute("data-slow")) sum += lengths[n];
+    }
+    var SPEED = sum / 5.8;
     pencil.style.opacity = "1";
     place(paths[0], lengths[0], 0);
 
     function drawStroke(idx) {
       var path = paths[idx];
       var total = lengths[idx];
-      var dur = Math.max(150, (total / SPEED) * 1000);
+      var dur = Math.max(125, (total / SPEED) * 1000);
+      if (path.getAttribute("data-slow")) dur = Math.max(1000, dur * 1.5);
       var t0 = null;
       function frame(now) {
         if (t0 === null) t0 = now;
@@ -252,9 +346,9 @@
       var fromP = paths[idx];
       var toP = paths[idx + 1];
       var pause;
-      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) pause = 280;
-      else if (isIntra(fromP, toP)) pause = 25;
-      else pause = 50;
+      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) pause = 200;
+      else if (isIntra(fromP, toP)) pause = 20;
+      else pause = 36;
       setTimeout(function () { liftTo(idx + 1); }, pause);
     }
 
@@ -268,13 +362,13 @@
       var intra = sameLine && isIntra(fromP, toP);
       var ms, hop;
       if (!sameLine) {
-        ms = 380;
+        ms = 290;
         hop = 22;
       } else if (intra) {
-        ms = 175;
+        ms = 135;
         hop = 6;
       } else {
-        ms = 125 + Math.min(75, dist * 0.4);
+        ms = 98 + Math.min(58, dist * 0.34);
         hop = Math.min(11, 6 + dist * 0.08);
       }
       var t0 = null;
