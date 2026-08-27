@@ -17,45 +17,48 @@
     body {
       min-height: 100vh;
       min-height: 100dvh;
-      background-color: #d2b57a;
-      background-image:
-        radial-gradient(ellipse 23vmin 13vmin at 8% 71%,
-          rgba(120, 74, 32, 0.12) 0%,
-          rgba(132, 86, 40, 0.05) 44%,
-          transparent 72%),
-        radial-gradient(ellipse 15vmin 10vmin at 80% 7%,
-          rgba(138, 92, 42, 0.10) 0%,
-          rgba(124, 80, 34, 0.04) 52%,
-          transparent 74%),
-        radial-gradient(ellipse 8vmin 5vmin at 34% 93%,
-          rgba(128, 82, 36, 0.09) 0%,
-          transparent 70%),
-        radial-gradient(ellipse 82% 58% at -8% -12%, rgba(92, 52, 16, 0.36), transparent 58%),
-        radial-gradient(ellipse 70% 52% at 110% -10%, rgba(80, 46, 14, 0.32), transparent 54%),
-        radial-gradient(ellipse 76% 60% at 108% 112%, rgba(70, 40, 12, 0.38), transparent 56%),
-        radial-gradient(ellipse 68% 50% at -10% 110%, rgba(86, 48, 14, 0.34), transparent 52%),
-        radial-gradient(ellipse 34% 18% at 14% 98%, rgba(112, 64, 22, 0.20), transparent 72%),
-        radial-gradient(ellipse 22% 30% at 99% 40%, rgba(96, 54, 16, 0.15), transparent 70%),
-        radial-gradient(ellipse 40% 16% at 62% -6%, rgba(104, 60, 18, 0.13), transparent 74%),
-        radial-gradient(ellipse 16% 24% at 1% 46%, rgba(84, 48, 14, 0.16), transparent 72%),
-        radial-gradient(ellipse 26% 14% at 90% 94%, rgba(98, 56, 16, 0.16), transparent 70%),
-        url("newsprint.png");
-      background-repeat:
-        no-repeat, no-repeat, no-repeat,
-        no-repeat, no-repeat, no-repeat, no-repeat,
-        no-repeat, no-repeat, no-repeat, no-repeat, no-repeat,
-        repeat;
-      background-size:
-        auto, auto, auto,
-        auto, auto, auto, auto,
-        auto, auto, auto, auto, auto,
-        256px 256px;
-      background-blend-mode:
-        multiply, multiply, multiply,
-        multiply, multiply, multiply, multiply,
-        multiply, multiply, multiply, multiply, multiply,
-        normal;
+      background-color: #1c1610;
+      background-image: url("poster.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       overflow: hidden;
+    }
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 82% 64% at 50% 40%,
+          rgba(36, 24, 14, 0.10) 0%,
+          rgba(22, 16, 10, 0.28) 100%),
+        linear-gradient(180deg,
+          rgba(32, 22, 12, 0.20) 0%,
+          rgba(18, 12, 8, 0.12) 46%,
+          rgba(12, 10, 8, 0.32) 100%);
+    }
+    .bg-overlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("newsprint.png") repeat;
+      background-size: 256px 256px;
+      opacity: 0.12;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bg-video { display: none; }
     }
     .paper-grain {
       position: fixed;
@@ -63,14 +66,14 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.22;
+      z-index: 2;
+      opacity: 0.12;
       mix-blend-mode: multiply;
     }
     .mug-stain {
       position: fixed;
       pointer-events: none;
-      z-index: 0;
+      z-index: 2;
       mix-blend-mode: multiply;
     }
     .mug-stain-a {
@@ -87,7 +90,7 @@
     }
     .stage {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -105,11 +108,12 @@
     }
     path.letter {
       fill: none;
-      stroke: #2f2b26;
+      stroke: #f4ead8;
       stroke-width: 2.35;
       stroke-linecap: round;
       stroke-linejoin: round;
       opacity: 0;
+      filter: url(#letterInk);
     }
     path.letter.ready { opacity: 1; }
     #pencil { pointer-events: none; will-change: transform, opacity; }
@@ -128,6 +132,8 @@
 </head>
 <body>
   <h1 class="vh">Welcome to braders.uk — Coming soon!</h1>
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="poster.jpg" src="bg.mp4" aria-hidden="true"></video>
+  <div class="bg-overlay" aria-hidden="true"></div>
   <svg class="paper-grain" aria-hidden="true" focusable="false">
     <defs>
       <filter id="paperGrain" x="0" y="0" width="100%" height="100%">
@@ -204,6 +210,9 @@
           <stop offset="0.4" stop-color="#d3928b"/>
           <stop offset="1" stop-color="#b56d68"/>
         </linearGradient>
+        <filter id="letterInk" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0.45" dy="0.85" stdDeviation="0.55" flood-color="#16110c" flood-opacity="0.58"/>
+        </filter>
       </defs>
     <path class="letter" data-i="0" data-ch="W" data-ln="1" d="M 61.40,40.00 C 59.00,73.00 57.40,108.00 59.60,123.20 C 66.80,104.00 74.20,78.00 78.50,64.00 C 77.70,86.00 76.40,112.00 79.00,123.40 C 86.40,102.00 94.20,62.00 100.60,40.50"/>
     <path class="letter" data-i="1" data-ch="e" data-ln="1" d="M 104.96,98.50 C 112.94,100.50 122.10,99.50 128.60,94.50 C 135.86,88.50 136.58,71.50 125.28,69.00 C 114.80,67.00 105.40,77.00 104.48,91.50 C 103.56,106.00 109.82,120.00 122.31,118.80 C 128.14,118.00 132.60,112.00 131.98,106.50"/>
