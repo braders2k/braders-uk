@@ -322,23 +322,8 @@
       if (document.visibilityState === "visible") kick();
     });
 
-    var looping = false;
-    function restartLoop() {
-      if (looping) return;
-      looping = true;
-      try { video.currentTime = 0; } catch (e) {}
-      kick();
-      setTimeout(function () { looping = false; }, 250);
-    }
     video.addEventListener("ended", function () {
-      try { video.currentTime = 0; } catch (e) {}
       kick();
-    });
-    video.addEventListener("timeupdate", function () {
-      var d = video.duration;
-      if (!isFinite(d) || d <= 0) return;
-      var t = video.currentTime;
-      if (t > 0.3 && t >= d - 0.15) restartLoop();
     });
   })();
   </script>
