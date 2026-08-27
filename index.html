@@ -169,20 +169,40 @@
       p.classList.add("ready");
     });
 
+    function easeInOut(t) {
+      return t * t * (3 - 2 * t);
+    }
+
+    var HOLD = 47;
+    var penAngle = HOLD;
+    var MULTI = { t: 1, b: 1, r: 1, a: 1, d: 1, k: 1, i: 1 };
+
+    function isIntra(fromP, toP) {
+      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) return false;
+      var ch = fromP.getAttribute("data-ch");
+      return ch === toP.getAttribute("data-ch") && MULTI[ch];
+    }
+
     function place(path, len, drawn) {
       var t = Math.max(0, Math.min(drawn, len));
       var pt = path.getPointAtLength(t);
-      var look = 1.4;
+      var look = 3.5;
       var a, b;
       if (t + look <= len) {
         a = pt;
-        b = path.getPointAtLength(t + look);
+        b = path.getPointAtLength(Math.min(len, t + look));
       } else {
         a = path.getPointAtLength(Math.max(0, t - look));
         b = pt;
       }
-      var ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-      pencil.setAttribute("transform", "translate(" + pt.x + " " + pt.y + ") rotate(" + (ang + 18) + ")");
+      var dx = b.x - a.x;
+      var dy = b.y - a.y;
+      var horiz = dx / (Math.abs(dx) + Math.abs(dy) + 0.001);
+      var target = HOLD + horiz * 4;
+      if (target < 40) target = 40;
+      if (target > 55) target = 55;
+      penAngle += (target - penAngle) * 0.09;
+      pencil.setAttribute("transform", "translate(" + pt.x + " " + pt.y + ") rotate(" + penAngle + ")");
     }
 
     function finish() {
@@ -201,30 +221,41 @@
 
     var sum = 0;
     for (var n = 0; n < lengths.length; n++) sum += lengths[n];
-    var SPEED = sum / 5.1;
+    var SPEED = sum / 8.8;
     pencil.style.opacity = "1";
     place(paths[0], lengths[0], 0);
 
     function drawStroke(idx) {
       var path = paths[idx];
       var total = lengths[idx];
-      var dur = Math.max(48, (total / SPEED) * 1000);
+      var dur = Math.max(150, (total / SPEED) * 1000);
       var t0 = null;
       function frame(now) {
         if (t0 === null) t0 = now;
         var u = Math.min(1, (now - t0) / dur);
-        var drawn = u * total;
+        var drawn = easeInOut(u) * total;
         path.style.strokeDashoffset = String(total - drawn);
         place(path, total, drawn);
         if (u < 1) {
           requestAnimationFrame(frame);
         } else {
           path.style.strokeDashoffset = "0";
-          if (idx + 1 < paths.length) liftTo(idx + 1);
+          place(path, total, total);
+          if (idx + 1 < paths.length) afterStroke(idx);
           else finish();
         }
       }
       requestAnimationFrame(frame);
+    }
+
+    function afterStroke(idx) {
+      var fromP = paths[idx];
+      var toP = paths[idx + 1];
+      var pause;
+      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) pause = 280;
+      else if (isIntra(fromP, toP)) pause = 25;
+      else pause = 50;
+      setTimeout(function () { liftTo(idx + 1); }, pause);
     }
 
     function liftTo(nextIdx) {
@@ -233,21 +264,28 @@
       var A = fromP.getPointAtLength(lengths[nextIdx - 1]);
       var B = toP.getPointAtLength(0);
       var dist = Math.hypot(B.x - A.x, B.y - A.y);
-      var ms;
-      if (dist < 10) ms = 16;
-      else if (dist < 30) ms = 32;
-      else ms = Math.min(180, 40 + dist * 0.38);
       var sameLine = fromP.getAttribute("data-ln") === toP.getAttribute("data-ln");
-      if (!sameLine) ms = Math.max(ms, 120);
+      var intra = sameLine && isIntra(fromP, toP);
+      var ms, hop;
+      if (!sameLine) {
+        ms = 380;
+        hop = 22;
+      } else if (intra) {
+        ms = 175;
+        hop = 6;
+      } else {
+        ms = 125 + Math.min(75, dist * 0.4);
+        hop = Math.min(11, 6 + dist * 0.08);
+      }
       var t0 = null;
       function frame(now) {
         if (t0 === null) t0 = now;
         var u = Math.min(1, (now - t0) / ms);
-        var s = u * u * (3 - 2 * u);
+        var s = easeInOut(u);
         var x = A.x + (B.x - A.x) * s;
-        var y = A.y + (B.y - A.y) * s - Math.sin(s * Math.PI) * Math.min(16, 7 + dist * 0.12);
-        var ang = Math.atan2(B.y - A.y, B.x - A.x) * 180 / Math.PI;
-        pencil.setAttribute("transform", "translate(" + x + " " + y + ") rotate(" + (ang + 18) + ")");
+        var y = A.y + (B.y - A.y) * s - Math.sin(s * Math.PI) * hop;
+        penAngle += (HOLD - penAngle) * 0.1;
+        pencil.setAttribute("transform", "translate(" + x + " " + y + ") rotate(" + penAngle + ")");
         if (u < 1) requestAnimationFrame(frame);
         else drawStroke(nextIdx);
       }
