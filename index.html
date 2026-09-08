@@ -72,6 +72,8 @@
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
+      transform-origin: left center;
+      animation: wordmark-pulse 3.6s ease-in-out infinite;
     }
 
     .wordmark .dot {
@@ -80,6 +82,11 @@
       border-radius: 50%;
       background: var(--fg);
       flex: none;
+    }
+
+    @keyframes wordmark-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.72; transform: scale(0.985); }
     }
 
     main {
@@ -161,6 +168,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .intro > * { animation: none; opacity: 1; transform: none; }
+      .wordmark { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
