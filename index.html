@@ -3,393 +3,169 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#d2b57a">
-  <title>braders.uk</title>
-  <meta name="description" content="braders.uk">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000000">
+  <title>braders.uk — Coming soon</title>
+  <meta name="description" content="braders.uk is coming soon. A new site is on its way.">
+  <meta property="og:title" content="braders.uk — Coming soon">
+  <meta property="og:description" content="braders.uk is coming soon. A new site is on its way.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://braders.uk/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23fff'/%3E%3C/svg%3E">
   <style>
-    :root { color-scheme: light; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      height: 100%;
-      background: #c9a86a;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #9a9a9a;
+      --rule: rgba(255, 255, 255, 0.18);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      height: 100%;
+      background: var(--bg);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     body {
       min-height: 100vh;
       min-height: 100dvh;
-      background-color: #1c1610;
-      background-image: url("poster-v10.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
-    .bg-video {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      pointer-events: none;
-      appearance: none;
-      -webkit-appearance: none;
+
+    header, main, footer {
+      padding-left: clamp(24px, 6vw, 72px);
+      padding-right: clamp(24px, 6vw, 72px);
     }
-    .bg-poster {
-      position: fixed;
-      inset: 0;
-      background-image: url("poster-v10.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.35s ease;
-    }
-    video::-webkit-media-controls,
-    video::-webkit-media-controls-enclosure,
-    video::-webkit-media-controls-start-playback-button,
-    video::-webkit-media-controls-overlay-play-button {
-      display: none !important;
-      opacity: 0;
-      pointer-events: none;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .bg-video { display: none; }
-    }
-    .stage {
-      position: relative;
-      z-index: 4;
-      min-height: 100vh;
-      min-height: 100dvh;
+
+    header {
+      padding-top: clamp(24px, 4vh, 40px);
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 5.5vw 4.5vw;
-      padding-top: calc(5vh + env(safe-area-inset-top, 0px));
-      padding-left: max(4.5vw, env(safe-area-inset-left));
-      padding-right: max(4.5vw, env(safe-area-inset-right));
+      align-items: center;
     }
-    .stage svg {
-      display: block;
-      width: min(94vw, 960px);
-      height: auto;
-      overflow: visible;
-      filter: drop-shadow(0 0 22px rgba(255, 252, 245, 0.42));
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
     }
-    path.letter {
-      fill: none;
-      stroke: #141414;
-      stroke-width: 3.7;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0;
-      filter: url(#letterInk);
+
+    .wordmark .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--fg);
+      flex: none;
     }
-    path.letter.ready { opacity: 1; }
-    #pencil { pointer-events: none; will-change: transform, opacity; }
-    .vh {
-      position: absolute;
-      width: 1px;
+
+    main {
+      display: flex;
+      align-items: center;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: 880px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: clamp(18px, 3vh, 28px);
+    }
+
+    h1 {
+      font-size: clamp(40px, 9vw, 96px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .rule {
+      width: 48px;
       height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      background: var(--rule);
+      margin: clamp(24px, 4vh, 40px) 0;
+    }
+
+    .sub {
+      max-width: 34ch;
+      font-size: clamp(16px, 1.4vw, 18px);
+      color: var(--muted);
+      text-wrap: pretty;
+    }
+
+    footer {
+      padding-bottom: clamp(24px, 4vh, 40px);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .intro > * {
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    }
+    .intro > :nth-child(1) { animation-delay: 80ms; }
+    .intro > :nth-child(2) { animation-delay: 180ms; }
+    .intro > :nth-child(3) { animation-delay: 300ms; }
+    .intro > :nth-child(4) { animation-delay: 380ms; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro > * { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-  <h1 class="vh">Welcome to braders.uk — Coming soon!</h1>
-  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" src="bg-v10.mp4" aria-hidden="true"></video>
-  <script>
-  (function () {
-    var video = document.querySelector(".bg-video");
-    if (!video) return;
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  <header>
+    <a class="wordmark" href="/" aria-label="braders.uk home">
+      <span class="dot" aria-hidden="true"></span>
+      <span>braders.uk</span>
+    </a>
+  </header>
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    if ("webkitPlaysInline" in video) video.webkitPlaysInline = true;
-    video.autoplay = true;
-    video.loop = true;
-    video.controls = false;
+  <main>
+    <div class="intro">
+      <p class="eyebrow">Under development</p>
+      <h1>Coming soon</h1>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="sub">The new braders.uk is on its way.</p>
+    </div>
+  </main>
 
-    function kick() {
-      var p = video.play();
-      if (p && typeof p.catch === "function") p.catch(function () {});
-    }
-
-    kick();
-    video.addEventListener("loadeddata", kick);
-    video.addEventListener("canplay", kick);
-    video.addEventListener("canplaythrough", kick);
-    window.addEventListener("load", kick);
-    window.addEventListener("pageshow", kick);
-    document.addEventListener("visibilitychange", function () {
-      if (document.visibilityState === "visible") kick();
-    });
-    video.addEventListener("playing", function () {
-      var poster = document.querySelector(".bg-poster");
-      if (poster) poster.style.opacity = "0";
-      kick();
-    });
-    document.addEventListener("touchstart", kick, { capture: true, once: true });
-    document.addEventListener("pointerdown", kick, { capture: true, once: true });
-    document.addEventListener("click", kick, { capture: true, once: true });
-    video.addEventListener("pause", function () {
-      if (document.visibilityState === "visible") kick();
-    });
-    video.addEventListener("ended", function () {
-      kick();
-    });
-  })();
-  </script>
-  <div class="bg-poster" aria-hidden="true"></div>
-  <div class="stage">
-    <svg viewBox="0 0 706 300" role="img" aria-labelledby="pgTitle" shape-rendering="geometricPrecision">
-      <title id="pgTitle">Welcome to braders.uk Coming soon!</title>
-      <defs>
-        <linearGradient id="gBarrel" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#2a2a2a"/>
-          <stop offset="0.18" stop-color="#161616"/>
-          <stop offset="0.48" stop-color="#070707"/>
-          <stop offset="0.72" stop-color="#141414"/>
-          <stop offset="1" stop-color="#050505"/>
-        </linearGradient>
-        <linearGradient id="gClip" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#f4f6f8"/>
-          <stop offset="0.18" stop-color="#c8ced6"/>
-          <stop offset="0.45" stop-color="#8a929c"/>
-          <stop offset="0.62" stop-color="#d5dae0"/>
-          <stop offset="1" stop-color="#6a717c"/>
-        </linearGradient>
-        <linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#e4e8ee"/>
-          <stop offset="0.32" stop-color="#9aa3af"/>
-          <stop offset="1" stop-color="#4a515a"/>
-        </linearGradient>
-        <linearGradient id="gNib" x1="0" y1="0" x2="1" y2="0.4">
-          <stop offset="0" stop-color="#b8c0ca"/>
-          <stop offset="0.4" stop-color="#6a717a"/>
-          <stop offset="1" stop-color="#1a1c20"/>
-        </linearGradient>
-        <filter id="letterInk" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0" dy="0.4" stdDeviation="0.9" flood-color="#f4f1ea" flood-opacity="0.55"/>
-        </filter>
-      </defs>
-    <path class="letter" data-i="0" data-ch="W" data-ln="1" d="M 61.40,40.00 C 59.00,73.00 57.40,108.00 59.60,123.20 C 66.80,104.00 74.20,78.00 78.50,64.00 C 77.70,86.00 76.40,112.00 79.00,123.40 C 86.40,102.00 94.20,62.00 100.60,40.50"/>
-    <path class="letter" data-i="1" data-ch="e" data-ln="1" d="M 104.96,98.50 C 112.94,100.50 122.10,99.50 128.60,94.50 C 135.86,88.50 136.58,71.50 125.28,69.00 C 114.80,67.00 105.40,77.00 104.48,91.50 C 103.56,106.00 109.82,120.00 122.31,118.80 C 128.14,118.00 132.60,112.00 131.98,106.50"/>
-    <path class="letter" data-i="2" data-ch="l" data-ln="1" d="M 147.40,39.50 C 141.72,70.00 137.20,102.00 135.56,123.50 C 135.71,128.80 141.78,126.50 143.68,119.00"/>
-    <path class="letter" data-i="3" data-ch="c" data-ln="1" d="M 177.90,82.00 C 175.32,70.00 163.30,67.00 155.52,80.00 C 149.62,90.00 147.28,109.00 152.76,118.50 C 157.36,126.00 169.10,124.50 176.78,114.00"/>
-    <path class="letter" data-i="4" data-ch="o" data-ln="1" d="M 197.90,69.50 C 186.74,70.50 178.56,86.00 178.64,103.00 C 178.84,118.00 188.94,125.50 201.12,115.00 C 210.14,105.50 214.52,80.00 205.44,70.50 C 203.06,68.50 199.48,69.00 197.58,71.50"/>
-    <path class="letter" data-i="5" data-ch="m" data-ln="1" d="M 217.20,72.00 C 213.24,98.00 211.28,114.00 211.28,124.00 C 216.34,98.00 227.24,70.50 238.58,71.50 C 245.92,72.50 243.04,98.00 239.48,124.00 C 244.84,98.00 256.74,70.50 267.42,72.50 C 273.68,74.00 269.72,100.00 265.40,124.50"/>
-    <path class="letter" data-i="6" data-ch="e" data-ln="1" d="M 261.96,98.50 C 269.94,100.50 279.10,99.50 285.60,94.50 C 292.86,88.50 293.58,71.50 282.28,69.00 C 271.80,67.00 262.40,77.00 261.48,91.50 C 260.56,106.00 266.82,120.00 279.31,118.80 C 285.14,118.00 289.60,112.00 288.98,106.50"/>
-    <path class="letter" data-i="7" data-ch="t" data-ln="1" d="M 326.34,48.00 C 321.28,74.00 316.68,104.00 315.36,123.50 C 315.71,128.80 321.53,126.20 323.14,118.00"/>
-    <path class="letter" data-i="8" data-ch="t" data-ln="1" d="M 310.14,80.50 C 317.78,76.50 325.86,76.00 335.06,81.00"/>
-    <path class="letter" data-i="9" data-ch="o" data-ln="1" d="M 349.90,69.50 C 338.74,70.50 330.56,86.00 330.64,103.00 C 330.84,118.00 340.94,125.50 353.12,115.00 C 362.14,105.50 366.52,80.00 357.44,70.50 C 355.06,68.50 351.48,69.00 349.58,71.50"/>
-    <path class="letter" data-i="10" data-ch="b" data-ln="1" d="M 396.12,40.00 C 390.84,68.00 386.12,100.00 383.68,124.00 C 383.96,128.50 389.36,126.00 390.14,118.00"/>
-    <path class="letter" data-i="11" data-ch="b" data-ln="1" d="M 390.08,79.00 C 395.06,68.50 413.14,68.00 415.80,87.00 C 417.20,102.00 407.74,120.50 393.18,124.00 C 385.99,125.20 384.12,115.00 385.96,106.00"/>
-    <path class="letter" data-i="12" data-ch="r" data-ln="1" d="M 420.50,72.00 C 416.64,98.00 414.68,114.00 414.68,124.00 C 414.96,128.50 420.36,126.00 421.44,118.00"/>
-    <path class="letter" data-i="13" data-ch="r" data-ln="1" d="M 420.56,76.00 C 427.40,69.50 435.82,70.00 440.12,77.50 C 442.06,81.00 440.34,85.50 437.10,87.00"/>
-    <path class="letter" data-i="14" data-ch="a" data-ln="1" d="M 455.04,70.50 C 444.28,71.50 435.56,86.00 436.00,102.00 C 436.40,117.00 446.49,125.20 458.40,114.50 C 466.30,104.50 469.16,78.50 459.74,70.50 C 458.20,69.50 455.95,69.80 454.80,72.00"/>
-    <path class="letter" data-i="15" data-ch="a" data-ln="1" d="M 464.60,72.00 C 461.04,98.00 458.78,114.00 458.08,124.00 C 458.11,128.80 463.83,126.20 465.98,119.00"/>
-    <path class="letter" data-i="16" data-ch="d" data-ln="1" d="M 490.78,114.00 C 482.28,126.50 468.18,124.00 468.36,106.00 C 468.62,90.00 478.40,69.50 491.06,68.50 C 498.14,68.00 500.20,77.00 498.76,86.00"/>
-    <path class="letter" data-i="17" data-ch="d" data-ln="1" d="M 505.32,40.00 C 500.60,72.00 495.36,106.00 493.48,124.00 C 493.48,129.00 499.28,126.50 500.98,119.00"/>
-    <path class="letter" data-i="18" data-ch="e" data-ln="1" d="M 503.96,98.50 C 511.94,100.50 521.10,99.50 527.60,94.50 C 534.86,88.50 535.58,71.50 524.28,69.00 C 513.80,67.00 504.40,77.00 503.48,91.50 C 502.56,106.00 508.82,120.00 521.31,118.80 C 527.14,118.00 531.60,112.00 530.98,106.50"/>
-    <path class="letter" data-i="19" data-ch="r" data-ln="1" d="M 538.50,72.00 C 534.64,98.00 532.68,114.00 532.68,124.00 C 532.96,128.50 538.36,126.00 539.44,118.00"/>
-    <path class="letter" data-i="20" data-ch="r" data-ln="1" d="M 538.56,76.00 C 545.40,69.50 553.82,70.00 558.12,77.50 C 560.06,81.00 558.34,85.50 555.10,87.00"/>
-    <path class="letter" data-i="21" data-ch="s" data-ln="1" d="M 580.20,77.00 C 577.06,68.50 565.22,67.50 559.78,76.50 C 555.58,84.00 559.04,90.50 566.98,94.00 C 575.84,98.00 581.30,104.50 577.62,115.00 C 573.94,125.50 561.46,128.50 553.44,120.50 C 551.22,117.50 552.24,113.00 555.26,111.00"/>
-    <path class="letter" data-i="22" data-ch="." data-ln="1" d="M 581.83,116.80 C 582.57,112.20 588.17,112.20 587.43,116.80 C 586.70,121.40 581.10,121.40 581.83,116.80"/>
-    <path class="letter" data-i="23" data-ch="u" data-ln="1" d="M 602.04,73.00 C 598.32,100.00 596.14,118.00 597.91,123.80 C 600.92,130.00 613.35,129.20 618.90,119.50 C 622.36,106.00 624.96,86.00 626.80,72.00 C 623.04,98.00 620.76,116.00 621.18,124.00"/>
-    <path class="letter" data-i="24" data-ch="k" data-ln="1" d="M 642.32,40.00 C 636.92,70.00 632.08,104.00 630.48,124.00 C 630.76,128.50 636.36,126.00 636.98,119.00"/>
-    <path class="letter" data-i="25" data-ch="k" data-ln="1" d="M 636.80,92.00 C 644.40,82.00 654.00,72.00 661.82,70.00"/>
-    <path class="letter" data-i="26" data-ch="k" data-ln="1" d="M 636.80,92.00 C 641.52,100.00 647.28,114.00 655.02,125.00"/>
-    <path class="letter" data-i="27" data-ch="C" data-ln="2" d="M 219.20,146.00 C 214.60,141.50 199.20,144.80 191.80,162.00 C 184.80,178.50 182.40,206.00 189.20,222.00 C 194.80,233.50 210.80,233.00 218.50,220.50"/>
-    <path class="letter" data-i="28" data-ch="o" data-ln="2" d="M 239.40,175.50 C 228.24,176.50 220.06,192.00 220.14,209.00 C 220.34,224.00 230.44,231.50 242.62,221.00 C 251.64,211.50 256.02,186.00 246.94,176.50 C 244.56,174.50 240.98,175.00 239.08,177.50"/>
-    <path class="letter" data-i="29" data-ch="m" data-ln="2" d="M 258.70,178.00 C 254.74,204.00 252.78,220.00 252.78,230.00 C 257.84,204.00 268.74,176.50 280.08,177.50 C 287.42,178.50 284.54,204.00 280.98,230.00 C 286.34,204.00 298.24,176.50 308.92,178.50 C 315.18,180.00 311.22,206.00 306.90,230.50"/>
-    <path class="letter" data-i="30" data-ch="i" data-ln="2" d="M 310.18,180.00 C 306.54,204.00 304.58,220.00 304.66,229.50 C 304.86,234.50 310.36,232.00 312.18,225.00"/>
-    <path class="letter" data-i="31" data-ch="i" data-ln="2" d="M 313.54,164.00 C 314.21,159.80 319.01,159.80 318.34,164.00 C 317.67,168.20 312.87,168.20 313.54,164.00"/>
-    <path class="letter" data-i="32" data-ch="n" data-ln="2" d="M 324.70,178.00 C 320.74,204.00 318.78,220.00 318.78,230.00 C 324.14,204.00 335.74,176.50 347.00,178.00 C 353.76,179.50 350.22,206.00 346.60,230.50"/>
-    <path class="letter" data-i="33" data-ch="g" data-ln="2" d="M 378.86,187.00 C 374.90,175.50 361.32,176.00 355.22,191.00 C 350.34,204.00 350.64,224.00 361.57,228.80 C 368.86,232.00 376.80,223.00 377.58,210.00 C 375.26,222.00 373.10,238.00 370.50,248.00 C 366.96,259.50 354.82,263.50 347.52,256.00 C 343.94,251.50 345.36,244.50 349.76,242.00"/>
-    <path class="letter" data-i="34" data-ch="s" data-ln="2" d="M 427.70,183.00 C 424.56,174.50 412.72,173.50 407.28,182.50 C 403.08,190.00 406.54,196.50 414.48,200.00 C 423.34,204.00 428.80,210.50 425.12,221.00 C 421.44,231.50 408.96,234.50 400.94,226.50 C 398.72,223.50 399.74,219.00 402.76,217.00"/>
-    <path class="letter" data-i="35" data-ch="o" data-ln="2" d="M 447.40,175.50 C 436.24,176.50 428.06,192.00 428.14,209.00 C 428.34,224.00 438.44,231.50 450.62,221.00 C 459.64,211.50 464.02,186.00 454.94,176.50 C 452.56,174.50 448.98,175.00 447.08,177.50"/>
-    <path class="letter" data-i="36" data-ch="o" data-ln="2" d="M 478.40,175.50 C 467.24,176.50 459.06,192.00 459.14,209.00 C 459.34,224.00 469.44,231.50 481.62,221.00 C 490.64,211.50 495.02,186.00 485.94,176.50 C 483.56,174.50 479.98,175.00 478.08,177.50"/>
-    <path class="letter" data-i="37" data-ch="n" data-ln="2" d="M 497.70,178.00 C 493.74,204.00 491.78,220.00 491.78,230.00 C 497.14,204.00 508.74,176.50 520.00,178.00 C 526.76,179.50 523.22,206.00 519.60,230.50"/>
-    <path class="letter" data-i="38" data-ch="!" data-ln="2" d="M 542.40,158.00 C 538.20,176.00 535.60,194.00 534.80,208.50 C 534.95,213.00 540.50,211.20 541.80,205.50"/>
-    <path class="letter" data-i="39" data-ch="!" data-ln="2" d="M 539.54,226.00 C 540.21,221.80 545.01,221.80 544.34,226.00 C 543.67,230.20 538.87,230.20 539.54,226.00"/>
-    <path class="letter" data-i="40" data-ch="~" data-ln="3" data-slow="1" d="M 206,275 C 238,261 272,290 312,271 C 344,256 368,286 404,272 C 436,260 462,288 500,269 C 526,257 548,278 556,264 C 561,255 551,251 543,258 C 535,265 537,277 551,280"/>
-      <g id="pencil" opacity="0">
-        <g transform="scale(1.18)">
-          <ellipse cx="-28" cy="5.35" rx="26" ry="1.95" fill="#1a120c" opacity="0.22"/>
-          <path d="M-57.8,-3.55 C-57.8,-7.05 -55.9,-7.85 -53.4,-7.85 L-41.6,-7.85 C-39.85,-7.85 -39.35,-6.45 -40.05,-5.55 L-41.55,-3.5 Z" fill="url(#gClip)"/>
-          <path d="M-56.7,-7.55 L-42.4,-7.55" fill="none" stroke="#fff" stroke-width="0.35" opacity="0.28"/>
-          <rect x="-58.2" y="-3.7" width="3.4" height="2.35" rx="0.35" fill="#1c2230"/>
-          <rect x="-67.0" y="-2.85" width="5.6" height="5.7" rx="0.85" fill="#0a0e16"/>
-          <rect x="-67.0" y="-2.85" width="5.6" height="1.45" rx="0.7" fill="#3a3a3a" opacity="0.32"/>
-          <rect x="-61.6" y="-3.3" width="47.4" height="6.6" rx="1.05" fill="url(#gBarrel)"/>
-          <rect x="-60.9" y="-2.95" width="45.8" height="1.25" rx="0.6" fill="#d0d0d0" opacity="0.16"/>
-          <rect x="-61.2" y="0.55" width="46.6" height="2.5" rx="0.55" fill="#000" opacity="0.32"/>
-          <rect x="-15.6" y="-3.4" width="3.15" height="6.8" rx="0.22" fill="url(#gClip)"/>
-          <path d="M-14.85,-3.4 V3.4 M-13.7,-3.4 V3.4" fill="none" stroke="#5a6270" stroke-width="0.2" opacity="0.5"/>
-          <rect x="-12.45" y="-2.7" width="6.35" height="5.4" rx="0.3" fill="url(#gMetal)"/>
-          <rect x="-12.2" y="-2.45" width="5.85" height="0.85" rx="0.3" fill="#fff" opacity="0.22"/>
-          <polygon points="-6.1,-2.05 -6.1,2.05 0,0" fill="url(#gNib)"/>
-          <polygon points="-6.1,-2.05 -2.9,-0.52 0,0" fill="#dce2ea" opacity="0.38"/>
-        </g>
-      </g>
-    </svg>
-  </div>
-  <noscript><style>path.letter{opacity:1}</style></noscript>
-  <script>
-  (function () {
-    var paths = Array.prototype.slice.call(document.querySelectorAll("path.letter"));
-    var pencil = document.getElementById("pencil");
-    if (!paths.length) return;
-
-    var lengths = paths.map(function (p) { return p.getTotalLength(); });
-    paths.forEach(function (p, i) {
-      p.style.strokeDasharray = String(lengths[i]);
-      p.style.strokeDashoffset = String(lengths[i]);
-      p.classList.add("ready");
-    });
-
-    function easeInOut(t) {
-      return t * t * (3 - 2 * t);
-    }
-
-    var HOLD = 47;
-    var penAngle = HOLD;
-    var MULTI = { t: 1, b: 1, r: 1, a: 1, d: 1, k: 1, i: 1, "!": 1 };
-
-    function isIntra(fromP, toP) {
-      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) return false;
-      var ch = fromP.getAttribute("data-ch");
-      return ch === toP.getAttribute("data-ch") && MULTI[ch];
-    }
-
-    function place(path, len, drawn) {
-      var t = Math.max(0, Math.min(drawn, len));
-      var pt = path.getPointAtLength(t);
-      var look = 3.5;
-      var a, b;
-      if (t + look <= len) {
-        a = pt;
-        b = path.getPointAtLength(Math.min(len, t + look));
-      } else {
-        a = path.getPointAtLength(Math.max(0, t - look));
-        b = pt;
-      }
-      var dx = b.x - a.x;
-      var dy = b.y - a.y;
-      var horiz = dx / (Math.abs(dx) + Math.abs(dy) + 0.001);
-      var target = HOLD + horiz * 4;
-      if (target < 40) target = 40;
-      if (target > 55) target = 55;
-      penAngle += (target - penAngle) * 0.09;
-      pencil.setAttribute("transform", "translate(" + pt.x + " " + pt.y + ") rotate(" + penAngle + ")");
-    }
-
-    function finish() {
-      var last = paths[paths.length - 1];
-      place(last, lengths[lengths.length - 1], lengths[lengths.length - 1]);
-      pencil.style.transition = "opacity 0.8s ease";
-      pencil.style.opacity = "0";
-    }
-
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      paths.forEach(function (p) { p.style.strokeDashoffset = "0"; });
-      pencil.style.opacity = "0";
-      finish();
-      return;
-    }
-
-    var sum = 0;
-    for (var n = 0; n < lengths.length; n++) {
-      if (!paths[n].getAttribute("data-slow")) sum += lengths[n];
-    }
-    var SPEED = sum / 4.0;
-    pencil.style.opacity = "1";
-    place(paths[0], lengths[0], 0);
-
-    function drawStroke(idx) {
-      var path = paths[idx];
-      var total = lengths[idx];
-      var dur = Math.max(125, (total / SPEED) * 1000);
-      if (path.getAttribute("data-slow")) dur = Math.max(1000, dur * 1.5);
-      var t0 = null;
-      function frame(now) {
-        if (t0 === null) t0 = now;
-        var u = Math.min(1, (now - t0) / dur);
-        var drawn = easeInOut(u) * total;
-        path.style.strokeDashoffset = String(total - drawn);
-        place(path, total, drawn);
-        if (u < 1) {
-          requestAnimationFrame(frame);
-        } else {
-          path.style.strokeDashoffset = "0";
-          place(path, total, total);
-          if (idx + 1 < paths.length) afterStroke(idx);
-          else finish();
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-
-    function afterStroke(idx) {
-      var fromP = paths[idx];
-      var toP = paths[idx + 1];
-      var pause;
-      if (fromP.getAttribute("data-ln") !== toP.getAttribute("data-ln")) pause = 150;
-      else if (isIntra(fromP, toP)) pause = 16;
-      else pause = 28;
-      setTimeout(function () {
-        liftTo(idx + 1);
-      }, pause);
-    }
-
-    function liftTo(nextIdx) {
-      var fromP = paths[nextIdx - 1];
-      var toP = paths[nextIdx];
-      var A = fromP.getPointAtLength(lengths[nextIdx - 1]);
-      var B = toP.getPointAtLength(0);
-      var dist = Math.hypot(B.x - A.x, B.y - A.y);
-      var sameLine = fromP.getAttribute("data-ln") === toP.getAttribute("data-ln");
-      var intra = sameLine && isIntra(fromP, toP);
-      var ms, hop;
-      if (!sameLine) {
-        ms = 230;
-        hop = 22;
-      } else if (intra) {
-        ms = 110;
-        hop = 6;
-      } else {
-        ms = 80 + Math.min(46, dist * 0.30);
-        hop = Math.min(11, 6 + dist * 0.08);
-      }
-      var t0 = null;
-      function frame(now) {
-        if (t0 === null) t0 = now;
-        var u = Math.min(1, (now - t0) / ms);
-        var s = easeInOut(u);
-        var x = A.x + (B.x - A.x) * s;
-        var y = A.y + (B.y - A.y) * s - Math.sin(s * Math.PI) * hop;
-        penAngle += (HOLD - penAngle) * 0.1;
-        pencil.setAttribute("transform", "translate(" + x + " " + y + ") rotate(" + penAngle + ")");
-        if (u < 1) requestAnimationFrame(frame);
-        else drawStroke(nextIdx);
-      }
-      requestAnimationFrame(frame);
-    }
-
-    requestAnimationFrame(function () { drawStroke(0); });
-  })();
-  </script>
+  <footer>
+    <span>&copy; 2026 braders.uk</span>
+  </footer>
 </body>
 </html>
