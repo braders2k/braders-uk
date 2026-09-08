@@ -123,9 +123,23 @@
 
     footer {
       padding-bottom: clamp(24px, 4vh, 40px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: center;
       font-size: 12px;
       letter-spacing: 0.06em;
       color: var(--muted);
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    footer a:hover,
+    footer a:focus-visible {
+      color: var(--fg);
     }
 
     .intro > * {
@@ -166,6 +180,7 @@
 
   <footer>
     <span>&copy; 2026 braders.uk</span>
+    <a href="mailto:simon@braders.uk">simon@braders.uk</a>
   </footer>
 </body>
 </html>
